@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog – VoltCore Electronics Components</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/blog.css">
+<style>
+  .filter-pill[data-cat="Tutorials"].active   { background:#c8410f; border-color:#c8410f; color:#fff; }
+  .filter-pill[data-cat="Reviews"].active     { background:#1a6b4a; border-color:#1a6b4a; color:#fff; }
+  .filter-pill[data-cat="Technical"].active   { background:#2563a8; border-color:#2563a8; color:#fff; }
+  .filter-pill[data-cat="Tips & Tricks"].active { background:#7c3aed; border-color:#7c3aed; color:#fff; }
+  .filter-pill[data-cat="AI & IoT"].active    { background:#0891b2; border-color:#0891b2; color:#fff; }
+  .filter-pill[data-cat="Projects"].active    { background:#b45309; border-color:#b45309; color:#fff; }
+
+  .post-card.hidden, .post-horizontal.hidden { display:none; }
+
+  .no-results {
+    display: none; grid-column:1/-1; text-align:center;
+    padding:60px 20px; color:var(--ink3); font-size:0.95rem;
+  }
+  .no-results.show { display:block; }
+
+  .topic.active { background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  .sort-row {
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:28px;
+  }
+  .sort-select {
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:7px 14px; font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem; color:var(--ink); cursor:pointer; outline:none;
+  }
+  .result-count { font-size:0.78rem; color:var(--ink3); padding:12px 0 0; display:block; min-height:28px; }
+
+  .featured-section.hidden { display:none; }
+
+  .show-more-topics {
+    font-size:0.74rem; color:var(--accent); cursor:pointer; margin-top:8px;
+    background:none; border:none; font-family:'JetBrains Mono',monospace;
+    font-weight:700; padding:0;
+  }
+  .topic.extra { display:none; }
+  .topic.extra.visible { display:inline-block; }
+  .post-card { cursor:pointer; }
+  .post-horizontal { cursor:pointer; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="main.html" class="logo">
+    <div class="logo-mark"><img src="assets/logo.svg" alt="VoltCore Logo"></img></div>
+    Volt<span>Core</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="main.html">Home</a></li>
+    <li><a href="shop.html">Products</a></li>
+    <li><a href="project.html">Projects</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="main.html#contact-section">Contact</a></li>
+  </ul>
+  <a href="shop.html" class="nav-cta">Shop Now →</a>
+</nav>
+
+<header class="blog-hero">
+  <div class="hero-label">Knowledge & Tutorials</div>
+  <h1>Learn <em>Engineering</em><br>from the Field</h1>
+  <p>In-depth articles on electronics, embedded programming, IoT, and maker culture — written by engineers, for those who truly want to build.</p>
+  <div class="hero-stats-row">
+    <div><div class="hero-stat-num">86</div><div class="hero-stat-label">Articles</div></div>
+    <div><div class="hero-stat-num">12</div><div class="hero-stat-label">Authors</div></div>
+    <div><div class="hero-stat-num">140K</div><div class="hero-stat-label">Reads / Month</div></div>
+    <div><div class="hero-stat-num">4.9★</div><div class="hero-stat-label">Rating</div></div>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-cats">
+    <button class="filter-pill active" data-cat="All">All</button>
+    <button class="filter-pill" data-cat="Tutorials">Tutorials</button>
+    <button class="filter-pill" data-cat="Reviews">Reviews</button>
+    <button class="filter-pill" data-cat="Technical">Technical</button>
+    <button class="filter-pill" data-cat="Tips & Tricks">Tips &amp; Tricks</button>
+    <button class="filter-pill" data-cat="AI & IoT">AI &amp; IoT</button>
+    <button class="filter-pill" data-cat="Projects">Projects</button>
+  </div>
+  <div class="search-wrap">
+    <span class="icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search articles…" autocomplete="off">
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="blog-main">
+  <div class="content-area">
+
+    <!-- Featured -->
+    <div class="featured-section reveal" id="featuredSection">
+      <div class="sec-label">Featured Article</div>
+      <div class="featured-post"
+           data-cat="Tutorials"
+           data-title="Getting Started with ESP32: Comprehensive Guide from GPIO to OTA Update"
+           onclick="goPost('esp32-guide')">
+        <div class="featured-img" style="background-image: url('img/esp32 getting started.png'); background-size: cover; background-position: center; background-color: transparent;">
+          <div class="featured-tag">Tutorial</div>
+        </div>
+        <div class="featured-body">
+          <div class="featured-meta">
+            <span>👤 VoltCore Team</span><span>·</span>
+            <span>📅 April 1, 2025</span><span>·</span>
+            <span>⏱ 8 min read</span>
+          </div>
+          <h2>Getting Started with ESP32: Comprehensive Guide from GPIO to OTA Update</h2>
+          <p>ESP32 is the most powerful microcontroller at its price point — dual-core 240MHz, integrated WiFi/Bluetooth 5.0, 34+ GPIOs, DAC, and 12-bit ADC. This guide takes you through Arduino IDE setup, GPIO programming, WiFi/BLE connectivity, to over-the-air (OTA) firmware updates.</p>
+          <span class="read-btn" style="cursor:pointer">Read Article →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Latest Posts -->
+    <div class="sort-row reveal">
+      <div class="sec-label" style="margin-bottom:0">Latest Posts</div>
+      <select class="sort-select" id="sortSelect">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="popular">Most Popular</option>
+        <option value="shortest">Shortest Read</option>
+      </select>
+    </div>
+
+    <span class="result-count reveal" id="resultCount"></span>
+
+    <div class="posts-grid reveal" id="postsGrid">
+
+      <div class="post-card"
+           data-cat="Reviews"
+           data-title="Arduino Uno R3 vs R4 WiFi: Which One to Buy in 2025?"
+           data-date="2025-03-28" data-reads="9800" data-time="5"
+           onclick="goPost('arduino-r3-vs-r4')">
+        <div class="post-thumb" style="background-image: url('img/r3r4.png'); background-size: cover; background-position: center;">
+          <span class="post-cat">Review</span>
+        </div>
+        <div class="post-body">
+          <div class="post-meta"><span>March 28, 2025</span><span>·</span><span>5 min read</span></div>
+          <h3>Arduino Uno R3 vs R4 WiFi: Which One to Buy in 2025?</h3>
+          <p>Detailed analysis of differences in chips, performance, pricing, and ecosystem between the two most popular Arduino Uno versions.</p>
+          <div class="post-footer">
+            <div class="author-chip"><div class="avatar">👨‍💻</div>The Electronic Guy</div>
+            <span class="post-link">Read →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card"
+           data-cat="Technical"
+           data-title="I2C vs SPI vs UART: When to Use Which Protocol?"
+           data-date="2025-03-22" data-reads="14200" data-time="6"
+           onclick="goPost('i2c-spi-uart')">
+        <div class="post-thumb" style="background-image: url('img/uartvsi2cvsspi.png'); background-size: cover; background-position: center;">
+          <span class="post-cat">Technical</span>
+        </div>
+        <div class="post-body">
+          <div class="post-meta"><span>March 22, 2025</span><span>·</span><span>6 min read</span></div>
+          <h3>I2C vs SPI vs UART: When to Use Which Protocol?</h3>
+          <p>Guide to choosing the right communication protocol — from sensors to displays, RF modules, and external memory.</p>
+          <div class="post-footer">
+            <div class="author-chip"><div class="avatar">👩‍💻</div>Sigma Boy</div>
+            <span class="post-link">Read →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card"
+           data-cat="AI & IoT"
+           data-title="Running TensorFlow Lite on ESP32: Offline Voice Recognition"
+           data-date="2025-03-15" data-reads="21000" data-time="12"
+           onclick="goPost('tflite-esp32')">
+        <div class="post-thumb" style="background-image: url('img/speechrec.png'); background-size: cover; background-position: center;">
+          <span class="post-cat" style="color:var(--accent3)">AI &amp; IoT</span>
+        </div>
+        <div class="post-body">
+          <div class="post-meta"><span>March 15, 2025</span><span>·</span><span>12 min read</span></div>
+          <h3>Running TensorFlow Lite on ESP32: Offline Voice Recognition</h3>
+          <p>Deploying compact ML models on ESP32 for high-accuracy, low-power wake-word detection without internet.</p>
+          <div class="post-footer">
+            <div class="author-chip"><div class="avatar">🧑‍💻</div>Edge Impulse</div>
+            <span class="post-link">Read →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card"
+           data-cat="Tips & Tricks"
+           data-title="Optimizing Power Consumption for IoT: Extend Battery Life 10x"
+           data-date="2025-03-08" data-reads="7600" data-time="7"
+           onclick="goPost('iot-power-tips')">
+        <div class="post-thumb" style="background-image: url('img/optimize.png'); background-size: cover; background-position: center;">
+          <span class="post-cat" style="color:var(--accent2)">Tips &amp; Tricks</span>
+        </div>
+        <div class="post-body">
+          <div class="post-meta"><span>March 8, 2025</span><span>·</span><span>7 min read</span></div>
+          <h3>Optimizing Power Consumption for IoT: Extend Battery Life 10x</h3>
+          <p>Deep sleep, light sleep, CPU frequency scaling, and disabling WiFi — keep your IoT device running for a year on a single charge.</p>
+          <div class="post-footer">
+            <div class="author-chip"><div class="avatar">👩‍🎓</div>Kukukaka</div>
+            <span class="post-link">Read →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card"
+           data-cat="Projects"
+           data-title="Build a Smart Home Hub with ESP32 and Home Assistant"
+           data-date="2025-02-18" data-reads="11500" data-time="10"
+           onclick="goPost('smart-home-hub')">
+        <div class="post-thumb" style="background-image: url('img/esp32homeassistant.png'); background-size: cover; background-position: center;">
+          <span class="post-cat" style="color:#f59e0b">Projects</span>
+        </div>
+        <div class="post-body">
+          <div class="post-meta"><span>Feb 18, 2025</span><span>·</span><span>10 min read</span></div>
+          <h3>Build a Smart Home Hub with ESP32 and Home Assistant</h3>
+          <p>Connect sensors, relays, and displays into a unified smart home dashboard using MQTT and Home Assistant YAML configs.</p>
+          <div class="post-footer">
+            <div class="author-chip"><div class="avatar">👨‍🔧</div>VoltCore Team</div>
+            <span class="post-link">Read →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-card"
+           data-cat="Tutorials"
+           data-title="Soldering 101: Tools, Techniques, and Common Mistakes"
+           data-date="2025-02-05" data-reads="18400" data-time="9"
+           onclick="goPost('soldering-101')">
+        <div class="post-thumb" style="background-image: url('img/soldering.png'); background-size: cover; background-position: center;">
+          <span class="post-cat" style="color:var(--accent)">Tutorial</span>
+        </div>
+        <div class="post-body">
+          <div class="post-meta"><span>Feb 5, 2025</span><span>·</span><span>9 min read</span></div>
+          <h3>Soldering 101: Tools, Techniques, and Common Mistakes</h3>
+          <p>Everything a beginner needs — choosing the right iron and solder to fixing cold joints, bridges, and lifted pads.</p>
+          <div class="post-footer">
+            <div class="author-chip"><div class="avatar">👩‍💻</div>Sigma Boy</div>
+            <span class="post-link">Read →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-results" id="noResults">No articles found. Try a different filter or search term.</div>
+    </div>
+
+    <!-- More Articles -->
+    <div class="sec-label reveal" id="moreLabel">More Articles</div>
+
+    <div class="post-horizontal reveal"
+         data-cat="Tutorials"
+         data-title="What is PWM? Controlling LED Brightness, Motor Speed, and Servos"
+         onclick="goPost('pwm-guide')">
+      <div class="post-h-thumb" style="background-image: url('img/controlling led.png');background-size: cover; background-position: center;"></div>
+      <div>
+        <div class="post-h-cat" style="color:var(--accent)">Tutorial</div>
+        <h3>What is PWM? Controlling LED Brightness, Motor Speed, and Servos</h3>
+        <div class="post-meta"><span>👤 The Electronic Guy</span><span>·</span><span>March 2, 2025</span><span>·</span><span>6 min read</span></div>
+      </div>
+    </div>
+
+    <div class="post-horizontal reveal"
+         data-cat="Technical"
+         data-title="MQTT Explained: Building an IoT Pub/Sub System with ESP32 and Mosquitto"
+         onclick="goPost('mqtt-esp32')">
+      <div class="post-h-thumb" style="background-image: url('img/mqtt.png');background-size: cover; background-position: center;"></div>
+      <div>
+        <div class="post-h-cat" style="color:var(--accent2)">Technical</div>
+        <h3>MQTT Explained: Building an IoT Pub/Sub System with ESP32 and Mosquitto</h3>
+        <div class="post-meta"><span>👤 Hachimi Mambo</span><span>·</span><span>Feb 24, 2025</span><span>·</span><span>9 min read</span></div>
+      </div>
+    </div>
+
+    <div class="post-horizontal reveal"
+         data-cat="AI & IoT"
+         data-title="ChatGPT + Arduino: Building a Voice-Activated Robot Arm"
+         onclick="goPost('chatgpt-robot-arm')">
+      <div class="post-h-thumb" style="background-image: url('img/chatgpt+esp32.png');background-size: cover; background-position: center;"></div>
+      <div>
+        <div class="post-h-cat" style="color:var(--accent3)">AI &amp; IoT</div>
+        <h3>ChatGPT + Arduino: Building a Voice-Activated Robot Arm</h3>
+        <div class="post-meta"><span>👤 Hachimi Mambo</span><span>·</span><span>Jan 30, 2025</span><span>·</span><span>11 min read</span></div>
+      </div>
+    </div>
+
+    <div class="pagination reveal">
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">→</button>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-card nl-card">
+      <div class="sidebar-head">📬 Newsletter</div>
+      <p>New articles and exclusive deals every week. Joined by 8,400+ makers.</p>
+      <input class="nl-input" type="email" placeholder="your@email.com">
+      <button class="nl-btn">Subscribe Free ✦</button>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-head">🏷️ Topics</div>
+      <div class="topics-wrap" id="topicsWrap">
+        <span class="topic" data-topic="Arduino">Arduino</span>
+        <span class="topic" data-topic="ESP32">ESP32</span>
+        <span class="topic" data-topic="Raspberry Pi">Raspberry Pi</span>
+        <span class="topic" data-topic="IoT">IoT</span>
+        <span class="topic" data-topic="Embedded C++">Embedded C++</span>
+        <span class="topic extra" data-topic="MicroPython">MicroPython</span>
+        <span class="topic extra" data-topic="PCB Design">PCB Design</span>
+        <span class="topic extra" data-topic="Robotics">Robotics</span>
+        <span class="topic extra" data-topic="AI & ML">AI &amp; ML</span>
+        <span class="topic extra" data-topic="Power Electronics">Power Electronics</span>
+        <span class="topic extra" data-topic="Sensors">Sensors</span>
+      </div>
+      <button class="show-more-topics" id="showMoreTopics">+ Show more topics</button>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-head">🔥 Popular Posts</div>
+      <div class="popular-item" onclick="goPost('top-arduino-projects')">
+        <div class="pop-num">01</div>
+        <div><div class="pop-title">Top 10 Arduino Projects for Beginners</div><div class="pop-meta">18,500 reads</div></div>
+      </div>
+      <div class="popular-item" onclick="goPost('soldering-101')">
+        <div class="pop-num">02</div>
+        <div><div class="pop-title">Basic Soldering Guide from A to Z</div><div class="pop-meta">12,300 reads</div></div>
+      </div>
+      <div class="popular-item" onclick="goPost('tflite-esp32')">
+        <div class="pop-num">03</div>
+        <div><div class="pop-title">TensorFlow Lite on ESP32</div><div class="pop-meta">21,000 reads</div></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-head">✍️ Authors</div>
+      <div class="author-row">
+        <div class="author-ava">👨‍💻</div>
+        <div><div class="author-name">Yes King</div><div class="author-role">Hardware Engineer</div></div>
+        <div class="author-count">14 posts</div>
+      </div>
+      <div class="author-row">
+        <div class="author-ava">👩‍💻</div>
+        <div><div class="author-name">Sigma Boy</div><div class="author-role">Firmware Developer</div></div>
+        <div class="author-count">11 posts</div>
+      </div>
+      <div class="author-row">
+        <div class="author-ava">🧑‍💻</div>
+        <div><div class="author-name">Hachimi Mambo</div><div class="author-role">IoT Specialist</div></div>
+        <div class="author-count">9 posts</div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <a href="main.html" class="footer-logo"><div class="logo-mark">⚡</div>Volt<span>Core</span></a>
+    <div class="footer-links">
+      <a href="main.html">Home</a>
+      <a href="main.html#product-section">Products</a>
+      <a href="project.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="main.html#contact-section">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 VoltCore. All rights reserved.</p>
+    <p>Da Nang · hakidabest@gmail.com</p>
+  </div>
+</footer>
+
+<script>
+function goPost(slug) {
+  window.location.href = 'post.html?id=' + slug;
+}
+
+const pills       = document.querySelectorAll('.filter-pill');
+const cards       = document.querySelectorAll('.post-card');
+const horizontals = document.querySelectorAll('.post-horizontal');
+const noResults   = document.getElementById('noResults');
+const resultCount = document.getElementById('resultCount');
+const featuredSection = document.getElementById('featuredSection');
+const moreLabel   = document.getElementById('moreLabel');
+const searchInput = document.getElementById('searchInput');
+const sortSelect  = document.getElementById('sortSelect');
+const postsGrid   = document.getElementById('postsGrid');
+
+let activeCat = 'All';
+
+function applyFilters() {
+  const query = searchInput.value.toLowerCase().trim();
+  let visible = 0;
+
+  cards.forEach(card => {
+    const catMatch   = activeCat === 'All' || card.dataset.cat === activeCat;
+    const titleMatch = !query || card.dataset.title.toLowerCase().includes(query);
+    if (catMatch && titleMatch) { card.classList.remove('hidden'); visible++; }
+    else card.classList.add('hidden');
+  });
+
+  horizontals.forEach(h => {
+    const catMatch   = activeCat === 'All' || h.dataset.cat === activeCat;
+    const titleMatch = !query || h.dataset.title.toLowerCase().includes(query);
+    if (catMatch && titleMatch) h.classList.remove('hidden');
+    else h.classList.add('hidden');
+  });
+
+  const feat = document.querySelector('.featured-post');
+  const featMatch = (activeCat === 'All' || feat.dataset.cat === activeCat) &&
+                    (!query || feat.dataset.title.toLowerCase().includes(query));
+  featuredSection.classList.toggle('hidden', !featMatch);
+  moreLabel.style.display = (activeCat !== 'All' || query) ? 'none' : '';
+
+  noResults.classList.toggle('show', visible === 0 && !featMatch);
+  resultCount.textContent = (activeCat !== 'All' || query)
+    ? `Showing ${visible} article${visible !== 1 ? 's' : ''}`
+    : '';
+}
+
+pills.forEach(pill => {
+  pill.addEventListener('click', () => {
+    pills.forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    activeCat = pill.dataset.cat;
+    applyFilters();
+  });
+});
+
+searchInput.addEventListener('input', applyFilters);
+
+sortSelect.addEventListener('change', () => {
+  const val = sortSelect.value;
+  const allCards = [...postsGrid.querySelectorAll('.post-card')];
+  allCards.sort((a, b) => {
+    if (val === 'newest')   return new Date(b.dataset.date) - new Date(a.dataset.date);
+    if (val === 'oldest')   return new Date(a.dataset.date) - new Date(b.dataset.date);
+    if (val === 'popular')  return +b.dataset.reads - +a.dataset.reads;
+    if (val === 'shortest') return +a.dataset.time  - +b.dataset.time;
+  });
+  allCards.forEach(c => postsGrid.appendChild(c));
+  postsGrid.appendChild(noResults);
+});
+
+document.querySelectorAll('.topic').forEach(t => {
+  t.addEventListener('click', () => t.classList.toggle('active'));
+});
+
+const showMoreBtn = document.getElementById('showMoreTopics');
+let expanded = false;
+showMoreBtn.addEventListener('click', () => {
+  expanded = !expanded;
+  document.querySelectorAll('.topic.extra').forEach(t => t.classList.toggle('visible', expanded));
+  showMoreBtn.textContent = expanded ? '− Show less' : '+ Show more topics';
+});
+
+document.querySelectorAll('.page-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+applyFilters();
+</script>
+</body>
+</html>
